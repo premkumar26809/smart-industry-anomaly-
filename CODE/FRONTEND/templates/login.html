@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Industry Anomaly Detection | Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="/static/assets/img/apple-icon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico">
+    <!-- Load Require CSS -->
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font CSS -->
+    <link href="/static/assets/css/boxicon.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Load Tempalte CSS -->
+    <link rel="stylesheet" href="/static/assets/css/templatemo.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/assets/css/custom.css">
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Open Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48ZyBmaWxsPSJub25lIiBzdHJva2U9IiMyYTZjODQiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjMiPjxwYXRoIGQ9Ik00LjUyIDQuNWg1MXY1MUg0LjV6Ii8+PGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iNCIvPjwvZz48L3N2Zz4=');
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .login-container {
+            background: rgba(26, 26, 46, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 440px;
+            overflow: hidden;
+            color: var(--light-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .login-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .login-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        .login-header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .login-header::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--dark-color);
+            transform: rotate(45deg);
+            border-radius: 4px;
+        }
+        
+        .login-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #a0a0c0;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: var(--light-color);
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+        }
+        
+        .form-control::placeholder {
+            color: #6c757d;
+        }
+        
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        
+        .login-footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #a0a0c0;
+        }
+        
+        .login-footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .login-footer a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .message-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            animation: slideIn 0.5s forwards;
+        }
+        
+        .message-box {
+            background: white;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 4px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+        }
+        
+        .message-box h1 {
+            font-size: 16px;
+            margin: 0 0 8px;
+            color: var(--dark-color);
+        }
+        
+        .message-box p {
+            margin: 0;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .industrial-icon {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .industrial-icon svg {
+            width: 80px;
+            height: 80px;
+            fill: none;
+            stroke: var(--secondary-color);
+            stroke-width: 1.5;
+        }
+        
+        @media (max-width: 576px) {
+            .login-container {
+                width: 90%;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Smart Industry Anomaly Detection</h1>
+            <p>Secure access to industrial monitoring systems</p>
+        </div>
+        
+        <div class="industrial-icon">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25,35 L35,35 L35,65 L25,65 Z" />
+                <path d="M40,25 L50,25 L50,65 L40,65 Z" />
+                <path d="M55,40 L65,40 L65,65 L55,65 Z" />
+                <path d="M70,30 L80,30 L80,65 L70,65 Z" />
+                <line x1="20" y1="65" x2="80" y2="65" />
+                <path d="M30,20 L30,35" />
+                <path d="M45,20 L45,25" />
+                <path d="M60,20 L60,40" />
+                <path d="M75,20 L75,30" />
+                <circle cx="30" cy="20" r="3" />
+                <circle cx="45" cy="20" r="3" />
+                <circle cx="60" cy="20" r="3" />
+                <circle cx="75" cy="20" r="3" />
+            </svg>
+        </div>
+        
+        <div class="login-body">
+            {% if msg %}
+            <div class="message-container">
+                <div class="message-box">
+                    <h1>Notification</h1>
+                    <p>{{ msg }}</p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <form class="form" action="{{url_for('login')}}" method="post">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn-login">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap -->
+    <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Templatemo -->
+    <script src="/static/assets/js/templatemo.js"></script>
+    <!-- Custom -->
+    <script src="/static/assets/js/custom.js"></script>
+</body>
+
+</html>

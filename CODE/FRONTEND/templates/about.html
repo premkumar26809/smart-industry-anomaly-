@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About - Smart Industry Anomaly Detection</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/static/assets/img/favicon.ico">
+    
+    <!-- CSS -->
+    <link href="/static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/assets/css/boxicon.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/assets/css/templatemo.css">
+    <link rel="stylesheet" href="/static/assets/css/custom.css">
+</head>
+<body>
+
+    <!-- Improved Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand h4 mb-0" href="/home">
+                <i class='bx bx-buildings text-primary'></i>
+                <span class="fw-bold text-dark">SIADD</span>
+                <span class="text-primary"> System</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/registration">Register</a></li>
+                    <li class="nav-item"><a class="nav-link active fw-bold text-primary" href="/about">About</a></li>
+                    <li class="nav-item ms-4">
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
+                                <i class='bx bx-user-circle bx-md'></i>
+                                {{ session['user_email'] }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-5 fw-bold text-primary mb-4">
+                        About SIADD
+                    </h1>
+                    <p class="lead text-muted">
+                        The <strong>Smart Industry Anomaly Detection Dataset (SIADD)</strong> is a specialized dataset designed for 
+                        <strong>Cyber-Physical Threat Monitoring in Industrial IoT Environments</strong>.
+                    </p>
+                    <p class="text-muted mt-3">
+                        In modern smart industries, cyber-physical systems integrate physical processes with networked computing. 
+                        This convergence increases vulnerability to sophisticated attacks that can disrupt operations, compromise safety, 
+                        and cause significant financial loss.
+                    </p>
+                    <p class="text-muted">
+                        SIADD provides a realistic, labeled dataset to train machine learning models for detecting anomalies and attacks 
+                        in real-time, enabling proactive defense and system resilience.
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="/static/assets/img/pic2.jpg" class="img-fluid rounded shadow" alt="Industrial IoT Security">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+
+    <!-- Vision & Goals -->
+    <section class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-6 mb-4">
+                    <i class='bx bxs-bulb display-1 mb-3'></i>
+                    <h3>Our Vision</h3>
+                    <p class="lead">
+                        To build intelligent, resilient industrial systems that detect and respond to cyber threats 
+                        before they cause harm.
+                    </p>
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <i class='bx bxs-shield display-1 mb-3'></i>
+                    <h3>Our Mission</h3>
+                    <p class="lead">
+                        Enable real-time anomaly detection in Industrial IoT using advanced machine learning 
+                        to protect critical infrastructure.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Scripts -->
+    <script src="/static/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/assets/js/templatemo.js"></script>
+    <script src="/static/assets/js/custom.js"></script>
+</body>
+</html>

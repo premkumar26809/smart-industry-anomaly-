@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIADD Anomaly Detection - Model Comparison Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #1e293b !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .navbar-brand, .nav-link {
+            color: #e0e0e0 !important;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #00d2ff !important;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 100px auto 40px auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            color: #00d2ff;
+            text-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+        h2 {
+            text-align: center;
+            color: #a0d8ff;
+            margin-bottom: 50px;
+            font-weight: 400;
+            font-size: 1.4em;
+        }
+        .selector {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        label {
+            font-size: 1.4em;
+            margin-right: 20px;
+            font-weight: bold;
+            color: #00d2ff;
+        }
+        select {
+            padding: 14px 24px;
+            font-size: 1.2em;
+            border-radius: 12px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            cursor: pointer;
+            min-width: 300px;
+        }
+        select option {
+            background: #203a43;
+            color: white;
+        }
+        .model-details {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        .model-details.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        .accuracy {
+            font-size: 2.8em;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 16px;
+            color: white;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .acc-xgb { background: linear-gradient(90deg, #3498db, #2980b9); }
+        .acc-realmlp { background: linear-gradient(90deg, #9b59b6, #8e44ad); }
+        .acc-catboost { background: linear-gradient(90deg, #f39c12, #e67e22); }
+        h3 {
+            color: #00d2ff;
+            border-bottom: 3px solid #00d2ff;
+            padding-bottom: 12px;
+            font-size: 1.6em;
+        }
+        pre {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: 1em;
+            white-space: pre-wrap;
+            border: 1px solid #333;
+        }
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            color: #777;
+            font-size: 1em;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/home">
+                <i class='bx bx-shield-alt-2'></i> SIADD System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/home">Home</a></li>
+                    <!-- <li class="nav-item"><a class="nav-link" href="/view">View Data</a></li> -->
+                    <li class="nav-item"><a class="nav-link active fw-bold" href="/model_info">Models</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/predict">Predict</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="/logout"><i class='bx bx-log-out'></i> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Smart Industry Anomaly Detection</h1>
+        <h2>Model Performance Comparison Dashboard</h2>
+
+        <div class="selector">
+            <label for="modelSelect">Select Model:</label>
+            <select id="modelSelect">
+                <option value="">-- Choose a model --</option>
+                <option value="xgb">XGBoost Classifier</option>
+                <option value="realmlp">RealMLP (Neural Network)</option>
+                <option value="catboost">CatBoost Classifier</option>
+            </select>
+        </div>
+
+        <!-- Default Message -->
+        <div id="default" class="model-details active">
+            <div class="card">
+                <h3>Welcome to the Model Dashboard</h3>
+                <p style="text-align:center; font-size:1.4em; line-height:1.8;">
+                    Please select a model from the dropdown above to view its performance metrics 
+                    and classification report.
+                </p>
+            </div>
+        </div>
+
+        <!-- XGBoost -->
+        <div id="xgb" class="model-details">
+            <div class="card accuracy acc-xgb">
+                Accuracy: 99.68%
+            </div>
+            <div class="card">
+                <h3>Model Details</h3>
+                <p><strong>Algorithm:</strong> XGBoost (Extreme Gradient Boosting)</p>
+                <p><strong>Classes:</strong> 5 (normal, dos, probe, r2l, u2r)</p>
+                <p><strong>Eval Metric:</strong> mlogloss</p>
+            </div>
+            <div class="card">
+                <h3>Classification Report</h3>
+                <pre>              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00     13483
+           1       1.00      1.00      1.00      1164
+           2       0.99      1.00      1.00      9958
+           3       0.98      0.97      0.98       242
+           4       0.97      0.96      0.97       709
+
+    accuracy                           1.00     25556
+   macro avg       0.99      0.99      0.99     25556
+weighted avg       1.00      1.00      1.00     25556</pre>
+            </div>
+        </div>
+
+        <!-- RealMLP -->
+        <div id="realmlp" class="model-details">
+            <div class="card accuracy acc-realmlp">
+                Accuracy: 99.29%
+            </div>
+            <div class="card">
+                <h3>Model Details</h3>
+                <p><strong>Algorithm:</strong> RealMLP (Multi-Layer Perceptron Neural Network)</p>
+                <p><strong>Architecture:</strong> Deep neural network with ReLU activations</p>
+                <p><strong>Classes:</strong> Dos, Probing, R2L, U2R, normal</p>
+            </div>
+            <div class="card">
+                <h3>Classification Report</h3>
+                <pre>              precision    recall  f1-score   support
+
+         Dos       1.00      1.00      1.00      2262
+     Probing       1.00      1.00      1.00      2182
+         R2L       0.98      1.00      0.99      1046
+         U2R       0.99      1.00      0.99       986
+      normal       0.99      0.98      0.99      2124
+
+    accuracy                           0.99      8600
+   macro avg       0.99      0.99      0.99      8600
+weighted avg       0.99      0.99      0.99      8600</pre>
+            </div>
+        </div>
+
+        <!-- CatBoost -->
+        <div id="catboost" class="model-details">
+            <div class="card accuracy acc-catboost">
+                Accuracy: 99.53%
+            </div>
+            <div class="card">
+                <h3>Model Details</h3>
+                <p><strong>Algorithm:</strong> CatBoost (Gradient Boosting on Decision Trees)</p>
+                <p><strong>Strength:</strong> Excellent handling of categorical features & robustness</p>
+                <p><strong>Classes:</strong> Dos, Probing, R2L, U2R, normal</p>
+            </div>
+            <div class="card">
+                <h3>Classification Report</h3>
+                <pre>              precision    recall  f1-score   support
+
+         Dos       1.00      1.00      1.00      2262
+     Probing       1.00      1.00      1.00      2182
+         R2L       0.98      1.00      0.99      1046
+         U2R       0.99      1.00      1.00       986
+      normal       1.00      0.99      0.99      2124
+
+    accuracy                           1.00      8600
+   macro avg       0.99      1.00      1.00      8600
+weighted avg       1.00      1.00      1.00      8600</pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Smart Industry Anomaly Detection Dataset (SIADD) • Multi-Model Evaluation • January 2026
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const select = document.getElementById('modelSelect');
+        const details = document.querySelectorAll('.model-details');
+
+        select.addEventListener('change', function() {
+            details.forEach(d => d.classList.remove('active'));
+            
+            const selected = this.value;
+            if (selected) {
+                document.getElementById(selected).classList.add('active');
+            } else {
+                document.getElementById('default').classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
