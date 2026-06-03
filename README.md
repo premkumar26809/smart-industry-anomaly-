@@ -20,7 +20,7 @@ This project detects cyber-physical threats in Industrial IoT network traffic us
 
 ## Setup
 
-Use Python 3.10 if possible.
+Use Python 3.10. Render is pinned to Python 3.10.13 with `.python-version`.
 
 ```bash
 cd CODE/FRONTEND
