@@ -31,7 +31,9 @@ pip install -r requirements.txt
 
 ## Database
 
-The Flask app expects a MySQL database. Create it using:
+On Render, create a Render Postgres database and add its internal database URL to the web service as `DATABASE_URL`.
+
+For local MySQL development, create the database using:
 
 ```bash
 mysql -u root -p < db.sql
@@ -39,6 +41,7 @@ mysql -u root -p < db.sql
 
 Optional environment variables:
 
+- `DATABASE_URL`
 - `SIADD_SECRET_KEY`
 - `SIADD_DB_HOST`
 - `SIADD_DB_PORT`

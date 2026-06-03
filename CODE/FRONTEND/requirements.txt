@@ -5,6 +5,7 @@ matplotlib==3.10.6
 mysql-connector-python==9.4.0
 numpy==2.2.6
 pandas==2.3.2
+psycopg2-binary==2.9.11
 scikit-learn==1.6.1
 shap==0.48.0
 

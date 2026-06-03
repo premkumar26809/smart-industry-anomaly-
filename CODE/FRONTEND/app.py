@@ -23,15 +23,36 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SIADD_SECRET_KEY', 'change-me-for-local-development')
 
 # =========================== DATABASE CONNECTION ===========================
+def connect_database():
+    database_url = os.getenv('DATABASE_URL')
+
+    if database_url:
+        import psycopg2
+        connection = psycopg2.connect(database_url, sslmode='require')
+    else:
+        connection = mysql.connector.connect(
+            host=os.getenv('SIADD_DB_HOST', 'localhost'),
+            port=int(os.getenv('SIADD_DB_PORT', '3306')),
+            user=os.getenv('SIADD_DB_USER', 'root'),
+            passwd=os.getenv('SIADD_DB_PASSWORD', 'root'),
+            database=os.getenv('SIADD_DB_NAME', 'Mydbs')
+        )
+
+    cursor = connection.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            name VARCHAR(225),
+            email VARCHAR(225) UNIQUE,
+            password VARCHAR(225),
+            Address VARCHAR(225)
+        )
+    """)
+    connection.commit()
+    return connection, cursor
+
+
 try:
-    mydb = mysql.connector.connect(
-        host=os.getenv('SIADD_DB_HOST', 'localhost'),
-        port=int(os.getenv('SIADD_DB_PORT', '3306')),
-        user=os.getenv('SIADD_DB_USER', 'root'),
-        passwd=os.getenv('SIADD_DB_PASSWORD', 'root'),
-        database=os.getenv('SIADD_DB_NAME', 'Mydbs')
-    )
-    mycur = mydb.cursor()
+    mydb, mycur = connect_database()
     print("✓ Database connected successfully!")
 except Exception as e:
     print(f"✗ Database connection failed: {e}")
